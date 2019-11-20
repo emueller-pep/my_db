@@ -28,8 +28,9 @@ defmodule MyDb.Backends.ListDb do
 
   @doc "find all of the keys that match a given value"
   def match(db, value) do
-    find_records_by_value(db, value)
-    |> Enum.map(fn {k, _v} -> k end)
+    keys = find_records_by_value(db, value)
+           |> Enum.map(fn {k, _v} -> k end)
+    { :ok, keys }
   end
 
   @doc "return the records themselves as kv-tuples"

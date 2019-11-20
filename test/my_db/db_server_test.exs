@@ -50,8 +50,9 @@ defmodule MyDb.DbServerTest do
     Server.write(:bar, 6)
     Server.write(:bam, 5)
 
-    assert Server.match(5) |> Enum.sort == [:bam, :foo]
-    assert Server.match(6) == [:bar]
+    { :ok, matches } = Server.match(5)
+    assert Enum.sort(matches) == [:bam, :foo]
+    assert Server.match(6) == { :ok, [:bar] }
     Server.stop()
   end
 end
