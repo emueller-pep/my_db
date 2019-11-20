@@ -4,6 +4,21 @@ defmodule MyDb.Backends.ListDb do
 
   Records are stored as key-value tuples, prepended onto the array, and
   looked up by searching the array linearly.
+
+  iex> MyDb.Backends.ListDb.write([a: 1, b: 2], :c, 3)
+  [c: 3, a: 1, b: 2]
+
+  iex> MyDb.Backends.ListDb.write([a: 1, b: 2], :a, 3)
+  [a: 3, a: 1, b: 2]
+
+  iex> MyDb.Backends.ListDb.read([a: 1, b: 2], :b)
+  { :ok, 2 }
+
+  iex> MyDb.Backends.ListDb.match([a: 1, b: 2, c: 1], 1)
+  { :ok, [:a, :c] }
+
+  iex> MyDb.Backends.ListDb.delete([a: 1, b: 2, c: 3, a: 5], :a)
+  [b: 2, c: 3]
   """
 
   @doc "create a new 'database'"
